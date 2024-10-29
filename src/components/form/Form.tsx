@@ -5,7 +5,7 @@ import { loginURL, signupURL } from '../../api/auth.ts'
 import { useAuth } from '../../context/AuthContext.tsx'
 import toast from 'react-hot-toast'
 import axios from 'axios'
-import { Input, User } from '../../utils/types.ts'
+import { Input } from '../../utils/types.ts'
 
 
 interface Props {
