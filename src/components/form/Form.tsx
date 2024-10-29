@@ -5,8 +5,8 @@ import { loginURL, signupURL } from '../../api/auth.ts'
 import { useAuth } from '../../context/AuthContext.tsx'
 import toast from 'react-hot-toast'
 import axios from 'axios'
-import { Input } from '../../utils/types.ts'
-import { addItemUrl } from '../../api/items.ts'
+import { Input, User } from '../../utils/types.ts'
+
 
 interface Props {
   title: string, description: string, inputs: Input[], btn: string, end: string,
@@ -17,8 +17,8 @@ const Form = ({ title, description, inputs, btn, end, type }: Props) => {
   interface FormData {
     [key: string]: string;
   }
-  const {  setToken } = useAuth()
-
+  const { setToken } = useAuth()
+  
   const [data, setData] = useState<FormData>({});
   const [image, setImage] = useState<File | false>(false)
 
@@ -41,7 +41,12 @@ const Form = ({ title, description, inputs, btn, end, type }: Props) => {
           if (response.status >= 200 && response.status < 300) {
             console.log(response.data);
             localStorage.setItem('user-token', response.data.token);
+   
             setToken(response.data.token)
+            
+           
+
+            localStorage.setItem('user-data', JSON.stringify(response.data.user))
             toast.success('Logged in successfully');
             navigate('/')
           }
@@ -66,7 +71,8 @@ const Form = ({ title, description, inputs, btn, end, type }: Props) => {
         }
         const response = await axios.post(signupURL, formData)
         if (response.status >= 200 && response.status < 300) {
-          localStorage.setItem('user-token', response.data.token);
+          localStorage.setItem('user-token', response.data.data.token);
+          localStorage.setItem('user-data', JSON.stringify(response.data.data.user))
           setToken(response.data.token)
           toast.success('account created successfully');
           navigate('/')
@@ -78,7 +84,7 @@ const Form = ({ title, description, inputs, btn, end, type }: Props) => {
       }
     }
   }
- 
+
   return (
     <form onSubmit={handleOnSubmit} className="flex w-max flex-col h-[78vh] justify-between bg-white text-black px-[32px] py-[24px] rounded-[1.5rem] max-w-[800px]">
       <div className='flex justify-between flex-col items-center'>

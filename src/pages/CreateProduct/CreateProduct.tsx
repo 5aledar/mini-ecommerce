@@ -30,7 +30,7 @@ const CreateProduct = () => {
                 formData.append('image', image)
             }
             const isValid: boolean = await validateProduct(formData)
-            console.log(data);
+
             if (isValid) {
                 const response = await axios.post(addItemUrl, formData, {
                     headers: {

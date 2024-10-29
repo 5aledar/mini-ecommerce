@@ -24,4 +24,11 @@ export  interface FormData {
     [key: string]: string;
   }
 
+  export interface User{
+    first_name: string;
+    last_name: string;
+    user_name: string;
+    profile_image_url: string;
+  }
+
 

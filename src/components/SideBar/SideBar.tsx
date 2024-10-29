@@ -29,6 +29,7 @@ const SideBar = ({ items }: Props) => {
       );
       if (response.data.msg) {
         localStorage.removeItem('user-token');
+  
         toast.success(response.data.msg);
         navigate('/auth')
       }

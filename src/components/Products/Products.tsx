@@ -8,6 +8,7 @@ import { useThemeContext } from "../../context/ThemeContext"
 const Products = () => {
   const {themeContext} = useThemeContext()
   const navigate = useNavigate()
+  const [deleted, setDeleted] = useState<boolean>(false)
   const token = localStorage.getItem('user-token')
   const [products, setProducts] = useState<Product[]>([])
   const getProducts = async () => {
@@ -19,7 +20,6 @@ const Products = () => {
         }
       })
       setProducts(response.data)
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -27,7 +27,7 @@ const Products = () => {
 
   useEffect(() => {
     getProducts()
-  }, [])
+  }, [deleted])
   return (
     <div className="h-[100vh]">
       <div className="w-full flex items-center justify-between py-2 px-5 font-semibold">
@@ -39,7 +39,7 @@ const Products = () => {
           products.length > 0 ?
             products?.map((product) => {
               return (
-                <ProductCard key={product.id} name={product.name} price={product.price} image_url={product.image_url} id={product.id} />
+                <ProductCard key={product.id} name={product.name} price={product.price} image_url={product.image_url} id={product.id} setDeleted={setDeleted} />
               )
             })
             :
